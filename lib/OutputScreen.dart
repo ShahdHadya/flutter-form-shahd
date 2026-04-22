@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
 
 class OutputScreen extends StatelessWidget {
-  final String? username;
-  final String? password;
-  final String? email;
-  final bool? rememberMe;
-  final String? gender;
-  final String? country;
-  final double? age;
-  final DateTime? selectedDate;
-
-  const OutputScreen({
-    super.key,
-    this.username,
-    this.password,
-    this.email,
-    this.rememberMe,
-    this.gender,
-    this.country,
-    this.age,
-    this.selectedDate,
-  });
+  const OutputScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Form Output'),
@@ -32,20 +16,20 @@ class OutputScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Username: $username'),
-            Text('Password: $password'),
-            Text('Email: $email'),
-            Text('Remember Me: $rememberMe'),
-            Text('Gender: $gender'),
-            Text('Country: $country'),
-            Text('Age: ${age?.round()}'),
-            Text('Selected Date: ${selectedDate?.toLocal().toString().split(' ')[0] ?? 'Not selected'}'),
-            const SizedBox(height: 20.0),
+          children: [
+            Text('Username: ${args['username']}'),
+            Text('Password: ${args['password']}'),
+            Text('Email: ${args['email']}'),
+            Text('Remember Me: ${args['rememberMe']}'),
+            Text('Gender: ${args['gender']}'),
+            Text('Country: ${args['country']}'),
+            Text('Age: ${args['age']?.round()}'),
+            Text(
+              'Selected Date: ${args['selectedDate'] != null ? args['selectedDate'].toLocal().toString().split(' ')[0] : 'Not selected'}',
+            ),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context); // Go back to the form screen
-              },
+              onPressed: () => Navigator.pop(context),
               child: const Text('Go Back'),
             ),
           ],
